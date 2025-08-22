@@ -136,12 +136,17 @@
     ];
 
     const TOOL_MAT = [ { key: 'carbide', name: 'Carbide' }, { key: 'hss', name: 'HSS' } ];
-    const FLUTES = [ { n: 1 }, { n: 2 }, { n: 3 }, { n: 4 } ];
+    const FLUTES = [ 
+    { n: 1, image: 'tool1f.png' }, 
+    { n: 2, image: 'tool2f.png' }, 
+    { n: 3, image: 'tool3f.png' }, 
+    { n: 4, image: 'tool4f.png' } 
+];
     const COATINGS = [
-      { key: 'dlc', name: 'DLC', tip: 'แนะนำสำหรับอะลูมิเนียม', color: 'bg-green-100 text-green-800' },
-      { key: 'altin', name: 'AlTiN', tip: 'สำหรับงานเหล็ก', color: 'bg-indigo-100 text-indigo-800' },
-      { key: 'none', name: 'ไม่เคลือบ', tip: '', color: 'bg-gray-100 text-gray-800' }
-    ];
+    { key: 'dlc', name: 'DLC', tip: 'แนะนำสำหรับอะลูมิเนียม', color: 'bg-green-100 text-green-800', image: 'DLCtool.png' },
+    { key: 'altin', name: 'AlTiN', tip: 'สำหรับงานเหล็ก', color: 'bg-indigo-100 text-indigo-800', image: 'altin.png' },
+    { key: 'nocoat', name: 'No Coat', tip: 'สำหรับงานทั่วไป', color: 'bg-gray-100 text-gray-800', image: 'nocoat.png' }
+];
     const DIAMS = [1, 2, 3, 4, 6, 8, 10, 12, 16, 20];
 
     // --- RENDER FUNCTIONS ---
@@ -199,9 +204,10 @@
             <div class="grid grid-cols-4 gap-3">
               ${FLUTES.map(f => `
                 <button onclick="chooseToolProp('flutes', ${f.n})" class="selection-card p-3 rounded-lg flex flex-col items-center justify-center gap-1 ${state.tool.flutes === f.n ? 'selected' : ''}">
-                  <span class="font-bold text-lg">${f.n}</span>
-                  <span class="text-xs text-slate-500">ฟัน</span>
-                </button>
+    <img src="${f.image}" alt="${f.n} Flutes" class="h-30 w-auto mb-1">
+    <span class="font-bold text-lg">${f.n}</span>
+    <span class="text-xs text-slate-500">ฟัน</span>
+</button>
               `).join('')}
             </div>
           </div>
@@ -210,10 +216,13 @@
             <label class="font-semibold text-slate-700 mb-2 block">ผิวเคลือบ (Coating)</label>
             <div class="space-y-2">
               ${COATINGS.map(c => `
-                <button onclick="chooseToolProp('coating', '${c.key}')" class="selection-card w-full text-left p-3 rounded-lg flex justify-between items-center ${state.tool.coating === c.key ? 'selected' : ''}">
-                  <span>${c.name}</span>
-                  ${c.tip ? `<span class="text-xs font-semibold px-2 py-1 rounded-md ${c.color}">${c.tip}</span>` : ''}
-                </button>
+                 <button onclick="chooseToolProp('coating', '${c.key}')" class="selection-card w-full text-left p-3 rounded-lg flex items-center gap-3 ${state.tool.coating === c.key ? 'selected' : ''}">
+    <img src="${c.image}" alt="${c.name}" class="h-9 w-auto rounded">
+    <div class="flex-grow">
+        <span>${c.name}</span>
+        ${c.tip ? `<span class="block text-xs text-slate-500">${c.tip}</span>` : ''}
+    </div>
+</button>
               `).join('')}
             </div>
           </div>
